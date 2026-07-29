@@ -1,52 +1,69 @@
 import wx
-from frontend import show_svg_image
+from frontend import png_to_bitmap
 
 
 class WeekForecastDayWidget(wx.Panel):
-    def __init__(self, parent: wx.Window, info_function, is_today: bool):
+    def __init__(self, parent: wx.Window, id):
         super().__init__(parent, id=wx.ID_ANY)
         # weather widget
-
+        self.id = id
         sizer = wx.GridSizer(0, 3, 0, 0)
         self.SetSizer(sizer)
         # info to be shown
-        info = info_function
+        self.placeholder_img = wx.Image(40, 40, False).ConvertToBitmap()
 
-        img_src_day = info["image_day"]
-        img_src_night = info["image_night"]
-        temp_day_label = info["temperature_day"]
-        temp_night_label = info["temperature_night"]
-        weekday_label = info["weekday"]
+        self.weekday_panel = self.WeekdayPanel(self)
+        self.day_info_panel = self.InfoPanel(self, self.placeholder_img)
+        self.night_info_panel = self.InfoPanel(self, self.placeholder_img)
 
-        if is_today:
-            weekday_label = "Today"
+        # add to sizer
 
-        weekday_panel = wx.Panel(self)
-        weekday_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        weekday_panel.SetSizer(weekday_sizer)
-        weekday = wx.StaticText(weekday_panel, wx.ID_ANY, label=weekday_label)
-        weekday_sizer.Add(weekday, 1, wx.LEFT, 5)
-
-        day_info_panel = wx.Panel(self)
-        day_info_sizer = wx.GridSizer(2)
-        day_info_panel.SetSizer(day_info_sizer)
-        image_day = show_svg_image(day_info_panel, img_src_day, 40)
-        temp_day = wx.StaticText(day_info_panel, wx.ID_ANY, temp_day_label)
-        day_info_sizer.AddMany(
-            [(image_day, 1, wx.LEFT, 10), (temp_day, 2, wx.RIGHT, 10)])
-
-        night_info_panel = wx.Panel(self)
-        night_info_sizer = wx.GridSizer(2)
-        night_info_panel.SetSizer(night_info_sizer)
-        image_night = show_svg_image(night_info_panel, img_src_night, 40)
-        temp_night = wx.StaticText(
-            night_info_panel, wx.ID_ANY, label=temp_night_label)
-        night_info_sizer.AddMany(
-            [(image_night, 1, wx.LEFT, 10), (temp_night,  2, wx.RIGHT, 10)])
-        # add to sizers
-
-        sizer.Add(weekday_panel, flag=wx.EXPAND |
+        sizer.Add(self.weekday_panel, 1, flag=wx.EXPAND |
                   wx.LEFT, border=10)
-        sizer.Add(day_info_panel, flag=wx.EXPAND |
+        sizer.Add(self.day_info_panel, 1, flag=wx.EXPAND |
                   wx.RIGHT, border=10)
-        sizer.Add(night_info_panel, flag=wx.EXPAND | wx.RIGHT, border=10)
+        sizer.Add(self.night_info_panel, 1,
+                  flag=wx.EXPAND | wx.RIGHT, border=10)
+
+    def update_content(self, data):
+        weekday = data.get("weekday")
+        temperature_day = data.get("temperature_day")
+        image_day = data.get("image_day")
+        temperature_night = data.get("temperature_night")
+        image_night = data.get("image_night")
+        if weekday:
+            self.weekday_panel.update_content(weekday)
+            self.day_info_panel.update_content(
+                temperature_day, image_day)
+            self.night_info_panel.update_content(
+                temperature_night, image_night)
+            self.Layout()
+
+    class WeekdayPanel(wx.Panel):
+        def __init__(self, parent):
+            super().__init__(parent)
+            self.sizer = wx.BoxSizer(wx.HORIZONTAL)
+            self.SetSizer(self.sizer)
+            self.text = wx.StaticText(self, wx.ID_ANY, label="Someday")
+            self.sizer.Add(self.text, 1, wx.LEFT, 5)
+
+        def update_content(self, label):
+            self.text.SetLabel(str(label))
+            self.Layout()
+
+    class InfoPanel(wx.Panel):
+        def __init__(self, parent, placeholder_img):
+            super().__init__(parent)
+            sizer = wx.GridSizer(2)
+            self.SetSizer(sizer)
+            self.image = wx.StaticBitmap(self, wx.ID_ANY, placeholder_img)
+            self.text = wx.StaticText(self, wx.ID_ANY, label="00.0°C")
+            sizer.AddMany(
+                [(self.image, 1, wx.LEFT, 10), (self.text, 2, wx.RIGHT, 10)])
+
+        def update_content(self, label, path):
+            if label and path:
+                self.text.SetLabel(str(label))
+                bitmap_obj = png_to_bitmap(path, 40)
+                self.image.SetBitmap(wx.BitmapBundle(bitmap_obj))
+                self.Layout()

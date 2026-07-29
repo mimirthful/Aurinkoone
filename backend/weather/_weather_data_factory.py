@@ -1,41 +1,56 @@
-import json
+from backend import read_json
 import os
-from backend.timeUtilities import datestring_to_datetime
+from backend.timeUtilities import ISO_8601_to_datetime
 import calendar
+import json
 
 
 class WeatherObjectFactory:
     def __init__(self):
+        self.district = self.get_district_name()
         self._info = self._set_info()
         self._timeseries_list = self._set_timeseries_list()
-
-        self._datestring_to_datetime = datestring_to_datetime
+        self._datestring_to_datetime = ISO_8601_to_datetime
         self.objects = []
         self._create_from_all_spots()
 
 # setters
-    def _set_info(self):
-        try:
-            with open("weather.json", "r") as f:
-                data = json.load(f)
-                return data
-        except:
-            raise Exception("Could not open weather.json")
+    def get_district_name(self):
+        folder = os.path.join("backend",  "api_requests")
+        filepath = os.path.join(folder, f"weather_settings.json")
+        # Finds the saved district setting
+        with open(filepath, "r") as file:
+            data = json.load(file)
+        return data.get("district")
 
-    def _set_timeseries_list(self) -> list:
+    def _set_info(self):
+        self.get_district_name()
         try:
-            timeseries_list = self._info.get(
-                "properties", {}).get("timeseries", [])
-            return timeseries_list
+            folder = os.path.join("backend",  "weather-JSON")
+            data = read_json(f'weather_{self.district}', folder)
+            return data
+        except Exception as e:
+            print("No weather info yet")
+        return {"info": None}
+
+    def _set_timeseries_list(self) -> list | None:
+        try:
+            if self._info:
+                timeseries_list = self._info.get(
+                    "properties", {}).get("timeseries", [])  # type: ignore
+                return timeseries_list
         # if timeseries list is empty
         except IndexError as error:
             print(f'{error} is empty')
+            return []
+        except AttributeError as error:
+            print("Attribute error ", error)
             return []
 
     class WeatherData:
         def __init__(self, info_dict: dict):
             self._info_dict = info_dict
-            self._datestring_to_datetime = datestring_to_datetime
+            self._datestring_to_datetime = ISO_8601_to_datetime
             self.datetime = self._set_datetime()
             self.weekday = calendar.day_name[self.datetime.weekday()]
             self.instant_air_temperature = self._get_instant_detail(
@@ -76,11 +91,11 @@ class WeatherObjectFactory:
                 return None
 
         def _find_weather_icon(self, next_hours):
-            name = self._get_icon_code(next_hours=next_hours)
+            name = self._get_icon_code(next_hours)
             if name:
-                return os.path.join("icons_weather", f'{name}.svg')
+                return os.path.join("icons_weather", f'{name}.png')
 
-            return os.path.join("icons_weather", f'placeholder.svg')
+            return os.path.join("icons_weather", f'icons8-full-image-100.png')
 
         def _get_instant_detail(self, requested_detail):
             match self._info_dict:
@@ -109,6 +124,7 @@ class WeatherObjectFactory:
             return None
 
     def _create_from_all_spots(self):
-        for item in self._timeseries_list:
-            obj = self._create_info_obj(item)
-            self.objects.append(obj)
+        if self._timeseries_list:
+            for item in self._timeseries_list:
+                obj = self._create_info_obj(item)
+                self.objects.append(obj)

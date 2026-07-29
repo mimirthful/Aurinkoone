@@ -48,12 +48,12 @@ class TimeManager:
 
     def compare_times_together(self, target: dt.datetime, comparable: dt.datetime) -> DateTimeRelation:
         """
-        Takes in a datetime objects, localizes them into UTC-0
         Returns object which contains info about the two dates relation to
         current time in UTC-0 
         """
-        aware_comparable = self._tz_zulu.localize(comparable)
-        aware_target = self._tz_zulu.localize(target)
+
+        aware_comparable = comparable.astimezone(self._tz_zulu)
+        aware_target = target.astimezone(self._tz_zulu)
 
         compared = DateTimeRelation(aware_target, aware_comparable)
 

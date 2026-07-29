@@ -1,3 +1,3 @@
-from .show_image import show_svg_image
+from .show_image import png_to_bitmap
 
-__all__ = ["show_svg_image"]
+__all__ = ["png_to_bitmap"]
