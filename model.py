@@ -69,20 +69,22 @@ class Model:
     def add_bus_stop(self, stop_code):
         '''
             Fetch a bus stop with given stop_code, and add stop to the lists. \n
-            If success, send a "new stop added" message
         '''
+        try_find_stop = self.find_stop_by_code(stop_code)
+        if try_find_stop:
+            return f'Stop [{stop_code}] already exists.'
         if not stop_code.isdigit():
             return "The code must only have numbers."
         if not len(stop_code) == 4:
             return "The code must be four numbers long."
-        filename = f'{stop_code}'
+        filename = f'tampere:{stop_code}'
         try:
             added = self.bus_api.get_stop_file(filename)
             if added:
                 self.bus_service.add_stop(filename)
                 pub.sendMessage("stops updated")
                 return f'Stop [{stop_code}] added.'
-            return f'Stop [{stop_code}] not found on backend or already exists.'
+            return f"Stop [{stop_code}] not found on backend. Either there's no internet connection or stop doesn't exist."
         except Exception as e:
             print(e)
 

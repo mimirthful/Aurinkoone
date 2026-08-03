@@ -15,10 +15,12 @@ class BusAPI:
         self.base_path = os.path.dirname(__file__)
 
     def delete_expiration_from_stop(self, name):
-        self.expiration_dict.pop(f'{name}')
+        try:
+            self.expiration_dict.pop(f'tampere:{name}')
+        except KeyError:
+            print("No expiration key found")
 
-    def get_stop_file(self, code):
-        name = f'tampere:{code}'
+    def get_stop_file(self, name):
         is_valid = False
         body = """
         query($stopId: String!) {
@@ -42,30 +44,30 @@ class BusAPI:
                 }
             }
         }"""
-
         variables = {
             "stopId": name}
-        print("BusAPI: Fetching Bus")
-        print("Fetching", name)
+
+        print("BusAPI: Fetching Bus", name)
         present = dt.now(timezone.utc)
         if name not in self.expiration_dict or self.expiration_dict[name] < present:
             print("BusAPI: Timestamp has expired")
             print("BusAPI: Present time at ", present)
-            response = requests.post(url=self.url, json={"query": body, "variables": variables}, headers={
-                "Content-Type": "application/json", "digitransit-subscription-key": self.key})  # type: ignore
-
-            if response.status_code == 200:
-                try:
-                    is_valid = self.validate_response_data(response)
-                    if is_valid:
-                        self.write_data_to_JSON(response, code, present)
-                except Exception as error:
-                    print(error)
-            else:
-                print("BusAPI: Response code: ", response.status_code)
+            try:
+                response = requests.post(url=self.url, json={"query": body, "variables": variables}, headers={
+                    "Content-Type": "application/json", "digitransit-subscription-key": self.key})  # type: ignore
+                if response.status_code == 200:
+                    try:
+                        is_valid = self.validate_response_data(response)
+                        if is_valid:
+                            self.write_data_to_JSON(response, name, present)
+                    except Exception as error:
+                        print(error)
+            except Exception:
+                print("BusAPI: Could not fetch BusAPI data")
         else:
-            print("BusAPI: Timestamp not expired yet, not fetching. Timestamp expires at",
-                  self.expiration_dict[name], "Present at ", present)
+            print("BusAPI: Timestamp not expired yet, not fetching.")
+            print("BusAPI: Timestamp expires at ", self.expiration_dict[name])
+            print("BusAPI: Present at ", present)
         return is_valid
 
     def validate_response_data(self, response):

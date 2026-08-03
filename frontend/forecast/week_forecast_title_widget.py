@@ -1,4 +1,6 @@
 import wx
+from frontend import png_to_bitmap
+import os
 
 
 class WeekForecastTitleWidget(wx.Panel):
@@ -6,24 +8,36 @@ class WeekForecastTitleWidget(wx.Panel):
         super().__init__(parent, id=wx.ID_ANY)
         sizer = wx.GridSizer(3)
         self.SetSizer(sizer)
+        base_path = os.path.dirname(__file__)
 
         # Cal title
         self.image_cal = wx.Panel(self)
         image_cal_sizer = wx.BoxSizer(wx.VERTICAL)
         self.image_cal.SetSizer(image_cal_sizer)
-        image_day_text = wx.StaticText(
-            self.image_cal, wx.ID_ANY | wx.ALL, "🗓️",)
+
+        path = os.path.join(base_path, "..", "..",
+                            "icons_ui", f'calendar.png')
+        normalized = os.path.normpath(path)
+        bitmap_obj = png_to_bitmap(normalized, 36)
+        image_cal_text = wx.StaticBitmap(
+            self.image_cal, wx.ID_ANY, wx.BitmapBundle(bitmap_obj))
+
         image_cal_sizer.AddSpacer(5)
         image_cal_sizer.Add(
-            image_day_text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL,)
+            image_cal_text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL,)
         image_cal_sizer.AddSpacer(5)
         # Day title
         image_day = wx.Panel(self)
-        image_day.SetBackgroundColour(wx.Colour("#E5BD2E9F"))
+        image_day.SetBackgroundColour(wx.Colour("#E5BD2EFF"))
         image_day_sizer = wx.BoxSizer(wx.VERTICAL)
         image_day.SetSizer(image_day_sizer)
-        image_day_text = wx.StaticText(
-            image_day, wx.ID_ANY | wx.ALL, "🌞",)
+        path = os.path.join(base_path, "..", "..",
+                            "icons_ui", f'sun.png')
+        normalized = os.path.normpath(path)
+        bitmap_obj = png_to_bitmap(normalized, 36)
+        image_day_text = wx.StaticBitmap(
+            image_day, wx.ID_ANY, wx.BitmapBundle(bitmap_obj))
+
         image_day_sizer.AddSpacer(5)
         image_day_sizer.Add(
             image_day_text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL, )
@@ -33,8 +47,14 @@ class WeekForecastTitleWidget(wx.Panel):
             self)
         image_night_sizer = wx.BoxSizer(wx.VERTICAL)
         self.image_night.SetSizer(image_night_sizer)
-        image_night_text = wx.StaticText(
-            self.image_night, wx.ID_ANY, "🌛",)
+
+        path = os.path.join(base_path, "..", "..",
+                            "icons_ui", f'moon.png')
+        normalized = os.path.normpath(path)
+        bitmap_obj = png_to_bitmap(normalized, 36)
+        image_night_text = wx.StaticBitmap(
+            self.image_night, wx.ID_ANY, wx.BitmapBundle(bitmap_obj))
+
         image_night_sizer.AddSpacer(5)
         image_night_sizer.Add(
             image_night_text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, )
@@ -53,8 +73,8 @@ class WeekForecastTitleWidget(wx.Panel):
         pdc = wx.PaintDC(self.image_cal)
         gc = wx.GCDC(pdc)
 
-        gc.SetPen(wx.Pen(wx.Colour("#E945587C"), 1))
-        gc.SetBrush(wx.Brush(wx.Colour("#E945587C")))
+        gc.SetPen(wx.Pen(wx.Colour("#E94558FF"), 1))
+        gc.SetBrush(wx.Brush(wx.Colour("#E94558FF")))
         size = self.image_cal.GetSize()
         x = 0 + 5
         y = 0
@@ -72,8 +92,8 @@ class WeekForecastTitleWidget(wx.Panel):
         pdc = wx.PaintDC(self.image_night)
         gc = wx.GCDC(pdc)
 
-        gc.SetPen(wx.Pen(wx.Colour("#3AC1DC95"), 1))
-        gc.SetBrush(wx.Brush(wx.Colour("#3AC1DC95")))
+        gc.SetPen(wx.Pen(wx.Colour("#3AC1DCFF"), 1))
+        gc.SetBrush(wx.Brush(wx.Colour("#3AC1DCFF")))
         size = self.image_night.GetSize()
         x = -5
         y = 0

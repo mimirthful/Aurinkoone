@@ -28,7 +28,6 @@ class BusStopService:
         from the self.stop_list[].
         Returns the deleted stop if operation succeeded and None if not.
         '''
-
         json_file = f'{stop.json_file_name}.json'
         path_raw = os.path.join(self.base_path, "..", "stops-JSON", json_file)
         path = os.path.normpath(path_raw)
