@@ -9,7 +9,7 @@ from datetime import timezone, timedelta
 class BusAPI:
     def __init__(self) -> None:
         load_dotenv()
-        self.key = ""
+        self.key = os.getenv('digitransit-subscription-key')
         self.url = "https://api.digitransit.fi/routing/v2/waltti/gtfs/v1"
         self.expiration_dict = {}
         self.base_path = os.path.dirname(__file__)
