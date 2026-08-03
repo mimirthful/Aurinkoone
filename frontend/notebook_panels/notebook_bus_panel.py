@@ -25,9 +25,6 @@ class NotebookBusPanel(wx.Panel):
         pub.subscribe(self.clear_sizer, "clear notebook_bus_panel")
         pub.subscribe(self.create_stop_widgets, 'stop available')
 
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-
     # Creates a stop widget
     def create_stop_widgets(self, data):
         bus_panel = BusStopPanel(self.child_panel, data)
@@ -41,25 +38,3 @@ class NotebookBusPanel(wx.Panel):
         self.child_sizer.Layout()
         self.main_sizer.Layout()
         pub.sendMessage("notebook_bus_panel empty")
-
-
-# BACKGROUND
-
-
-    def OnPaint(self, event):
-
-        pdc = wx.PaintDC(self)
-        gc = wx.GCDC(pdc)
-
-        gc.SetPen(wx.Pen(wx.Colour("#4530BF7A"), 1))
-        gc.SetBrush(wx.Brush(wx.Colour("#0E0E3A")))
-        size = self.GetSize()
-        x = 0
-        y = 0
-        w = size.width
-        h = size.height
-
-        gc.DrawRoundedRectangle(x, y, w, h, 5)
-
-    def OnEraseBackground(self, event):
-        pass

@@ -22,5 +22,6 @@ class BusStopTimesHeader(wx.Panel):
         panel.SetSizer(sizer)
         text = wx.StaticText(
             panel, wx.ID_ANY, label=label)
+        text.SetForegroundColour(wx.Colour("white"))
         sizer.Add(text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL)
         return panel

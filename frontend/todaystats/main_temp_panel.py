@@ -31,5 +31,6 @@ class MainTempPanel(wx.Panel):
         if label and image:
             self.temperature.SetLabel(label)
             bitmap_obj = png_to_bitmap(image, 200)
-            self.icon.SetBitmap(wx.BitmapBundle(bitmap_obj))
+            if bitmap_obj is not None:
+                self.icon.SetBitmap(wx.BitmapBundle(bitmap_obj))
             self.Layout()

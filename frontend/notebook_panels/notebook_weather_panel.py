@@ -31,24 +31,3 @@ class NotebookWeatherPanel(wx.Panel):
 
         inner_sizer.Add(
             self.week_forecast_panel, (1, 1), (3, 2), flag=wx.EXPAND | wx.ALL, border=5)
-
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-
-    def OnPaint(self, event):
-
-        pdc = wx.PaintDC(self)
-        gc = wx.GCDC(pdc)
-
-        gc.SetPen(wx.Pen(wx.Colour("#4530BF7A"), 1))
-        gc.SetBrush(wx.Brush(wx.Colour("#0E0E3A")))
-        size = self.GetSize()
-        x = 0
-        y = 0
-        w = size.width
-        h = size.height
-
-        gc.DrawRoundedRectangle(x, y, w, h, 5)
-
-    def OnEraseBackground(self, event):
-        pass

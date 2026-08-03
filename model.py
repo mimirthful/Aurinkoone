@@ -75,7 +75,7 @@ class Model:
             return "The code must only have numbers."
         if not len(stop_code) == 4:
             return "The code must be four numbers long."
-        filename = f'tampere:{stop_code}'
+        filename = f'{stop_code}'
         try:
             added = self.bus_api.get_stop_file(filename)
             if added:
@@ -132,7 +132,8 @@ class Model:
 
 # -------------------------- WEATHER ---------------------------
     def get_district_name(self):
-        folder = os.path.join("backend",  "api_requests")
+        base_path = os.path.dirname(__file__)
+        folder = os.path.join(base_path, "backend",  "api_requests")
         filepath = os.path.join(folder, f"weather_settings.json")
         # Finds the saved district setting
         with open(filepath, "r") as file:
@@ -140,7 +141,8 @@ class Model:
         return data.get("district")
 
     def update_weather_setting_JSON(self, district):
-        folder = os.path.join("backend",  "api_requests")
+        base_path = os.path.dirname(__file__)
+        folder = os.path.join(base_path, "backend",  "api_requests")
         filepath = os.path.join(folder, f"weather_settings.json")
         d = {"district": district}
         # Finds the saved district setting

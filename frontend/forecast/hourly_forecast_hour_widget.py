@@ -30,7 +30,8 @@ class HourlyForecastHourWidget(wx.Panel):
         if hour and image and label and rain_change:
             self.hour.update_content(hour)
             bitmap_obj = png_to_bitmap(image, 64)
-            self.image.SetBitmap(wx.BitmapBundle(bitmap_obj))
+            if bitmap_obj is not None:
+                self.image.SetBitmap(wx.BitmapBundle(bitmap_obj))
             self.label.update_content(label)
             self.rain_label.update_content(rain_change)
             self.Layout()

@@ -60,6 +60,7 @@ class ChildPanel(wx.Panel):
         self.SetSizer(sizer)
         self.text = wx.StaticText(
             self, wx.ID_ANY, label="Loading")
+        self.text.SetForegroundColour(wx.Colour("white"))
         sizer.Add(self.text, 1, flag=wx.ALIGN_CENTER_HORIZONTAL)
         self.arrive_time = dt.now()
         self.timer = None

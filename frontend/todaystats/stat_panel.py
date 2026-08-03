@@ -17,15 +17,15 @@ class StatPanel(wx.Panel):
         self.sizer.Clear(delete_windows=True)
 
         # UV
-        uv_widget = StatWidget(self, self.bitmaps.uv, "UV", "#4530BF7A")
+        uv_widget = StatWidget(self, self.bitmaps.uv, "UV")
         pub.subscribe(uv_widget.update_content, "uv")
         # Rain change
         rain_widget = StatWidget(
-            self, self.bitmaps.umbrella, "Rain change", "#4530BF7A")
+            self, self.bitmaps.umbrella, "Rain change")
         pub.subscribe(rain_widget.update_content, "rain")
         # wind speed
         wind_widget = StatWidget(
-            self, self.bitmaps.wind, "Wind speed", "#4530BF7A")
+            self, self.bitmaps.wind, "Wind speed")
         pub.subscribe(wind_widget.update_content, "wind")
 
         self.sizer.AddMany([(uv_widget, 1, wx.ALIGN_CENTER | wx.LEFT | wx.RIGHT, 5),

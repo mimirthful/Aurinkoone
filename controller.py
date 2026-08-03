@@ -11,6 +11,7 @@ class Controller:
         self.main_frame.Show()
         pub.subscribe(self.model.start_threads, "ui ready")
         pub.subscribe(self.update_frames, "threads_started")
+        pub.subscribe(self.unsubcribe_threads, "threads_started")
         pub.subscribe(self.update_frames, "weather updated")
         pub.subscribe(self.OnClose, "Closing")
         pub.subscribe(self.clear_content, "stops updated")
@@ -18,6 +19,9 @@ class Controller:
         pub.subscribe(self.create_new_bus_stop, "new stop")
         pub.subscribe(self.delete_bus_stop, "delete stop")
         pub.subscribe(self.update_weather_setting, "weather_area_changed")
+
+    def unsubcribe_threads(self):
+        pub.unsubscribe(self.model.start_threads, "ui ready")
 
     def update_frames(self):
         self.get_district_name()

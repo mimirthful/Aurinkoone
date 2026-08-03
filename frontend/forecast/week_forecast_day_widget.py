@@ -65,5 +65,6 @@ class WeekForecastDayWidget(wx.Panel):
             if label and path:
                 self.text.SetLabel(str(label))
                 bitmap_obj = png_to_bitmap(path, 40)
-                self.image.SetBitmap(wx.BitmapBundle(bitmap_obj))
+                if bitmap_obj is not None:
+                    self.image.SetBitmap(wx.BitmapBundle(bitmap_obj))
                 self.Layout()

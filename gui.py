@@ -8,13 +8,11 @@ class FrontFrame(wx.Frame):  # inherits wx.Frame
     def __init__(self, windowTitle):
         super().__init__(parent=None, title=windowTitle)
         # panel and sizer
-        self.SetBackgroundColour(wx.Colour("#0E0E3A"))
         panel = wx.Panel(self)
         sizer = wx.BoxSizer(wx.HORIZONTAL)
         panel.SetSizer(sizer)
         # Notebook
         self.notebook = wx.Listbook(panel, wx.ID_ANY)
-        self.notebook.ListView.SetBackgroundColour(wx.Colour("#0E0E3A"))
         image_list = wx.ImageList(64, 64)
         self.notebook.AssignImageList(image_list)
         # Icons

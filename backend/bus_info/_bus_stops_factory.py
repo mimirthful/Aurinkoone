@@ -11,7 +11,9 @@ class BusStopsFactory:
 
     def __init__(self):
         self.bus_stop_objects: list = []
-        self.files_path = os.path.join("backend", "stops-JSON")
+        self.base_path = os.path.dirname(__file__)
+        self.files_raw_path = os.path.join(self.base_path, "..", "stops-JSON")
+        self.files_path = os.path.normpath(self.files_raw_path)
         self.update()
 
     def update(self) -> None:
@@ -22,9 +24,13 @@ class BusStopsFactory:
         """
         Search for json files on self.files_path and tries to make a BusStop object out of them
         """
-        for file in os.listdir(self.files_path):
-            if file.endswith(".json"):
-                self.add_new_stop(file)
+        try:
+            for file in os.listdir(self.files_path):
+                if file.endswith(".json"):
+                    self.add_new_stop(file)
+        except FileNotFoundError:
+            print("No stops-JSON folder found. Creating one.")
+            os.makedirs(self.files_path)
 
     def add_new_stop(self, filename: str) -> None:
         """

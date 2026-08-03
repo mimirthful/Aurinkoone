@@ -14,7 +14,10 @@ class UiBitmaps:
 
     def _set_bitmaps(self, icon_name: str) -> wx.Bitmap:
         try:
-            path = os.path.join("icons_ui", f'{icon_name}.png')
+            base_path = os.path.dirname(__file__)
+            path = os.path.join(
+                base_path, "..", "icons_ui", f'{icon_name}.png')
+            path = os.path.normpath(path)
             img = wx.Image(path)
             img.Rescale(64, 64)
             bmp = wx.Bitmap(img)

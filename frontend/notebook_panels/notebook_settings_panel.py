@@ -32,26 +32,3 @@ class NotebookSettingsPanel(wx.Panel):
         sizer.Add(bus_setting_panel,  flag=wx.ALL | wx.EXPAND, border=5)
         sizer.Add(info_setting_panel,  flag=wx.EXPAND |
                   wx.ALL, border=5)
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-
-
-# BACKGROUND
-
-    def OnPaint(self, event):
-
-        pdc = wx.PaintDC(self)
-        gc = wx.GCDC(pdc)
-
-        gc.SetPen(wx.Pen(wx.Colour("#4530BF7A"), 1))
-        gc.SetBrush(wx.Brush(wx.Colour("#0E0E3A")))
-        size = self.GetSize()
-        x = 0
-        y = 0
-        w = size.width
-        h = size.height
-
-        gc.DrawRoundedRectangle(x, y, w, h, 5)
-
-    def OnEraseBackground(self, event):
-        pass

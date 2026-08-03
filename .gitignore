@@ -4,6 +4,7 @@
 
 ### Project based ###
 demo/
+Aurinkoone.spec
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/

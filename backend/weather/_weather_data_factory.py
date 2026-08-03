@@ -16,18 +16,30 @@ class WeatherObjectFactory:
 
 # setters
     def get_district_name(self):
-        folder = os.path.join("backend",  "api_requests")
+
+        base_path = os.path.dirname(__file__)
+        folder = os.path.join(base_path, "..", "api_requests")
         filepath = os.path.join(folder, f"weather_settings.json")
+        filepath = os.path.normpath(filepath)
+        folder = os.path.normpath(folder)
         # Finds the saved district setting
-        with open(filepath, "r") as file:
-            data = json.load(file)
-        return data.get("district")
+        try:
+            with open(filepath, "r") as file:
+                data = json.load(file)
+            return data.get("district")
+        except FileNotFoundError:
+            print("No weather_settings.json file found. Creating one.")
+            with open(filepath, 'x') as file:
+                file.write('{"district": "Finlayson"}')
+            self.get_district_name()
 
     def _set_info(self):
         self.get_district_name()
         try:
-            folder = os.path.join("backend",  "weather-JSON")
-            data = read_json(f'weather_{self.district}', folder)
+            base_path = os.path.dirname(__file__)
+            folder = os.path.join(base_path, "..", "weather-JSON")
+            filepath = os.path.normpath(folder)
+            data = read_json(f'weather_{self.district}', filepath)
             return data
         except Exception as e:
             print("No weather info yet")
@@ -92,10 +104,16 @@ class WeatherObjectFactory:
 
         def _find_weather_icon(self, next_hours):
             name = self._get_icon_code(next_hours)
+            base_path = os.path.dirname(__file__)
             if name:
-                return os.path.join("icons_weather", f'{name}.png')
 
-            return os.path.join("icons_weather", f'icons8-full-image-100.png')
+                path = os.path.join(base_path, "..", "..",
+                                    "icons_weather", f'{name}.png')
+                normalized = os.path.normpath(path)
+                return normalized
+            path = os.path.join(base_path, "..", "..",
+                                "icons_weather", f'icons8-full-image-100.png')
+            return os.path.normpath(path)
 
         def _get_instant_detail(self, requested_detail):
             match self._info_dict:
