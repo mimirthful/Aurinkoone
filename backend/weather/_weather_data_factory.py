@@ -28,7 +28,8 @@ class WeatherObjectFactory:
                 data = json.load(file)
             return data.get("district")
         except FileNotFoundError:
-            print("No weather_settings.json file found. Creating one.")
+            print(
+                "WeatherObjectFactory: No weather_settings.json file found. Creating one.")
             with open(filepath, 'x') as file:
                 file.write('{"district": "Finlayson"}')
             self.get_district_name()
@@ -42,7 +43,7 @@ class WeatherObjectFactory:
             data = read_json(f'weather_{self.district}', filepath)
             return data
         except Exception as e:
-            print("No weather info yet")
+            print("WeatherObjectFactory: No weather info yet")
         return {"info": None}
 
     def _set_timeseries_list(self) -> list | None:
@@ -53,10 +54,10 @@ class WeatherObjectFactory:
                 return timeseries_list
         # if timeseries list is empty
         except IndexError as error:
-            print(f'{error} is empty')
+            print(f'WeatherObjectFactory: {error} is empty')
             return []
         except AttributeError as error:
-            print("Attribute error ", error)
+            print("WeatherObjectFactory: Attribute error ", error)
             return []
 
     class WeatherData:
@@ -88,7 +89,7 @@ class WeatherObjectFactory:
             if time:
                 datetime_obj = self._datestring_to_datetime(time)
                 return datetime_obj
-            raise ValueError("Could not determine timestamp")
+            raise ValueError("WeatherData: Could not determine timestamp")
 
         # get 1/6/12 h icons
         def _get_icon_code(self, next_hours):
@@ -99,7 +100,7 @@ class WeatherObjectFactory:
                 return symbol
 
             except AttributeError as error:
-                print(f'WeatherDataFactory: _get_icon_code():{error}')
+                print(f'WeatherData: _get_icon_code():{error}')
                 return None
 
         def _find_weather_icon(self, next_hours):
@@ -138,7 +139,7 @@ class WeatherObjectFactory:
             return info_obj
 
         except Exception as error:
-            print(f'WeatherDataFactory: _create_info_obj(): {error}')
+            print(f'WeatherData: _create_info_obj(): {error}')
             return None
 
     def _create_from_all_spots(self):

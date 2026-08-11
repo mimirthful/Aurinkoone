@@ -120,7 +120,7 @@ class WeatherDataService:
                 self.next_7_nights[key] = obj
                 i = i + 1
         except IndexError as e:
-            print("No data on lists")
+            print("WeatherDataService: No data on lists")
 
     def return_info_from_key(self, key: str) -> wof.WeatherData | None:
         if key in self.next_12_hours_per_hour:
@@ -144,7 +144,7 @@ class WeatherDataService:
                     temps.append(obj.instant_air_temperature)
 
             except Exception as e:
-                print(f'{e}')
+                print(f'WeatherDataService: {e}')
 
             i = i + 1
         return temps

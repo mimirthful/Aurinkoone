@@ -26,13 +26,13 @@ class WeekForecastPanel(wx.Panel):
         target_days = 7
         widget_list = []
         # Adding title to the list
-        title = WeekForecastTitleWidget(self)
+        title = WeekForecastTitleWidget(self.sizer.GetStaticBox())
         widget_list.append(title)
 
         # Widgets
         i = 0
         while i < target_days:
-            widget = WeekForecastDayWidget(self, i)
+            widget = WeekForecastDayWidget(self.sizer.GetStaticBox(), i)
             topic_name = f"daily_forecast.{i}"
             pub.subscribe(widget.update_content, topic_name)
             widget_list.append(widget)

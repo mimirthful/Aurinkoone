@@ -12,7 +12,6 @@ class BusStopPanel(wx.Panel):
         self.last_added_list_index = 0
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetMinSize(wx.Size(470, -1))
-        self.SetBackgroundStyle(wx.BG_STYLE_PAINT)
         self.SetSizer(self.sizer)
         info_header = BusStopInfoHeader(
             self, self.stop_info["name"], self.stop_info["code"])
@@ -24,10 +23,7 @@ class BusStopPanel(wx.Panel):
         self.bus_panel.SetSizer(self.bus_sizer)
         self.sizer.Add(self.bus_panel, flag=wx.EXPAND)
         self.add_widgets()
-        self.sizer.AddStretchSpacer(1)
-
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
+        self.SetBackgroundColour(wx.Colour(21, 56, 105))
 
     def add_widgets(self):
         for bus in self.stop_info["stop_times"]:
@@ -47,10 +43,6 @@ class BusStopPanel(wx.Panel):
 
         if len(visible) <= 7:
             colour = wx.Colour(f'#{bus["bus_color"]}')
-            if self.last_added_list_index % 2 != 0:
-                colour.Set(colour.GetRed(), colour.GetGreen(),
-                           colour.GetBlue(), alpha=180)
-
             widget = BusWidget(self.bus_panel, colour, identify)
 
             widget.update_content(bus)
@@ -78,23 +70,3 @@ class BusStopPanel(wx.Panel):
             if win and not win.IsBeingDeleted():
                 win.Destroy()
         return super().Destroy()
-   # BACKGROUND
-
-    def OnPaint(self, event):
-
-        pdc = wx.PaintDC(self)
-        gc = wx.GCDC(pdc)
-
-        gc.SetPen(wx.Pen(wx.Colour("#153869D0"), 3))
-        gc.SetBrush(wx.Brush(wx.Colour("#173A8BC7")))
-        size = self.GetSize()
-        x = 0
-        y = 0
-        w = size.width
-        h = size.height
-
-        gc.DrawRoundedRectangle(x, y, w, h, 10)
-        y += 100
-
-    def OnEraseBackground(self, event):
-        pass

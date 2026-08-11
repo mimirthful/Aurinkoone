@@ -12,7 +12,7 @@ class HourlyForecastPanel(wx.Panel):
             self), wx.VERTICAL)
         self.SetSizer(self.sizer)
         self.scroll_panel = scrolled.ScrolledPanel(
-            self, size=wx.Size(410, -1))
+            self.sizer.GetStaticBox(), size=wx.Size(410, -1))
         self.scroll_panel.SetupScrolling()
 
         self.sizer.Add(self.scroll_panel, 1, wx.EXPAND)

@@ -63,6 +63,24 @@ class Model:
             time.sleep(180)
 
 # -------------------------- BUS STOPS -------------------------
+    def remove_api_key(self):
+        self.bus_api.remove_api_key()
+
+    def get_latest_response_date(self):
+        return self.bus_api.latest_date
+
+    def get_api_key(self):
+        return self.bus_api.key
+
+    def set_api_key(self, key):
+        return self.bus_api.set_api_key(key)
+
+    def check_api_key_status(self):
+        key = self.get_api_key()
+        if key:
+            return True
+        return False
+
     def return_stop_list_codes(self) -> list[str]:
         return self.bus_service.return_stop_list_codes()
 
@@ -70,13 +88,14 @@ class Model:
         '''
             Fetch a bus stop with given stop_code, and add stop to the lists. \n
         '''
-        try_find_stop = self.find_stop_by_code(stop_code)
-        if try_find_stop:
-            return f'Stop [{stop_code}] already exists.'
+
         if not stop_code.isdigit():
             return "The code must only have numbers."
         if not len(stop_code) == 4:
             return "The code must be four numbers long."
+        try_find_stop = self.find_stop_by_code(stop_code)
+        if try_find_stop:
+            return f'Stop [{stop_code}] already exists.'
         filename = f'tampere:{stop_code}'
         try:
             added = self.bus_api.get_stop_file(filename)
@@ -84,7 +103,7 @@ class Model:
                 self.bus_service.add_stop(filename)
                 pub.sendMessage("stops updated")
                 return f'Stop [{stop_code}] added.'
-            return f"Stop [{stop_code}] not found on backend. Either there's no internet connection or stop doesn't exist."
+            return f"Stop [{stop_code}] not found on backend.\nEither there's no internet \nconnection or stop doesn't exist."
         except Exception as e:
             print(e)
 

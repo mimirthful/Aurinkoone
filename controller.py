@@ -1,17 +1,14 @@
-from model import Model
-from gui import FrontFrame
-from pubsub import pub
 import wx
+from pubsub import pub
+from gui import FrontFrame
+from model import Model
 
 
 class Controller:
     def __init__(self):
         self.model = Model()
-        self.main_frame = FrontFrame("Aurinkoone")
-        self.main_frame.Show()
         pub.subscribe(self.model.start_threads, "ui ready")
         pub.subscribe(self.update_frames, "threads_started")
-        pub.subscribe(self.unsubcribe_threads, "threads_started")
         pub.subscribe(self.update_frames, "weather updated")
         pub.subscribe(self.OnClose, "Closing")
         pub.subscribe(self.clear_content, "stops updated")
@@ -19,9 +16,13 @@ class Controller:
         pub.subscribe(self.create_new_bus_stop, "new stop")
         pub.subscribe(self.delete_bus_stop, "delete stop")
         pub.subscribe(self.update_weather_setting, "weather_area_changed")
-
-    def unsubcribe_threads(self):
-        pub.unsubscribe(self.model.start_threads, "ui ready")
+        pub.subscribe(self.check_api_key_status, "api_key_status_check")
+        pub.subscribe(self.set_api_key, "api_key_added")
+        pub.subscribe(self.get_latest_response_date, "stops updated")
+        pub.subscribe(self.clear_content, "stops updated")
+        pub.subscribe(self.remove_api_key, "api_key_removed")
+        self.main_frame = FrontFrame("Aurinkoone")
+        self.main_frame.Show()
 
     def update_frames(self):
         self.get_district_name()
@@ -39,6 +40,47 @@ class Controller:
         print("Exit")
 
 # -------------------------- BUS STOPS -------------------------
+    def remove_api_key(self):
+        stop_list = self.model.return_stop_list_codes()
+        for stop in stop_list:
+            self.delete_bus_stop(stop)
+
+        self.model.remove_api_key()
+        wx.CallAfter(pub.sendMessage,
+                     "latest_response_date_changed", date="")
+        wx.CallAfter(pub.sendMessage,
+                     "api_key_info_changed", key_exists=False)
+
+    def get_latest_response_date(self):
+        date = self.model.get_latest_response_date()
+        wx.CallAfter(pub.sendMessage,
+                     "latest_response_date_changed", date=date)
+
+    def set_api_key(self, key):
+        valid = True
+        stripped = key.strip()
+        message = "API key is either not valid\nor there is no internet connection."
+        previous_key = self.model.get_api_key()
+
+        if stripped == previous_key:
+            message = "Given key is already set. No need to reset."
+            valid = False
+
+        if valid:
+            success = self.model.set_api_key(stripped)
+            if success:
+                message = "API key set succesfully."
+                wx.CallAfter(pub.sendMessage,
+                             "api_key_info_changed", key_exists=True)
+
+        wx.CallAfter(pub.sendMessage,
+                     "api_key_changed_status_response", message=message)
+
+    def check_api_key_status(self):
+        is_key = self.model.check_api_key_status()
+        wx.CallAfter(pub.sendMessage, "api_key_info_changed",
+                     key_exists=is_key)
+
     def return_stop_list_codes(self):
         list = self.model.return_stop_list_codes()
         wx.CallAfter(pub.sendMessage, "stop_list_codes", codes=list)

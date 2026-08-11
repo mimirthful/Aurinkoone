@@ -31,9 +31,10 @@ class ChangeWeatherAreaWidget(wx.Panel):
         self.choicebox = wx.Choice(self, choices=district_list)
         self.choicebox.Bind(wx.EVT_CHOICE, self.OnChoice)
         self.button = wx.Button(self, label="Send")
+        self.button.GetDefaultSize(self)
         self.Bind(wx.EVT_BUTTON, self.on_click, source=self.button)
-        self.sizer.AddMany(((self.text, 1, wx.ALL, 5), (self.choicebox, 1, wx.ALL, 5),
-                           (self.button, 1, wx.ALL, 5)))
+        self.sizer.AddMany(((self.text, 0, wx.ALL, 5), (self.choicebox, 0, wx.ALL, 5),
+                           (self.button, 0, wx.ALL, 5)))
 
     def OnChoice(self, event):
         self.choice = self.choicebox.GetString(self.choicebox.GetSelection())
@@ -42,3 +43,5 @@ class ChangeWeatherAreaWidget(wx.Panel):
         if self.choice:
             pub.sendMessage("weather_area_changed",
                             district=self.choice.strip())
+            pub.sendMessage("notification_text_received",
+                            label=f'Weather area:\nWeather area changed into {self.choice}')
