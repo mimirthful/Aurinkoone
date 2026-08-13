@@ -45,8 +45,8 @@ class FrontFrame(wx.Frame):  # inherits wx.Frame
         wx.CallAfter(self.on_ui_ready)
 
     def on_ui_ready(self):
-        pub.sendMessage("ui ready")
+        pub.sendMessage("ui_ready")
 
     def OnClose(self, event):
-        pub.sendMessage("Closing")
+        pub.sendMessage("closing")
         event.Skip()

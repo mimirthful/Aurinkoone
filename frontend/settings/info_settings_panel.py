@@ -22,9 +22,9 @@ class InfoSettingsPanel(wx.Panel):
         self.weathericonspanel = self.InfoTextPanel(
             self, f'Weather symbols © 2015 Yr/NRK, licensed under CC BY 4.0.')
         self.weatherpanel = self.InfoTextPanel(
-            self, f'Weather Data from MET Norway • ', "yr.no", "https://developer.yr.no/doc/License/")
+            self, f'Weather Data from MET Norway • ', "yr.no", "https://www.yr.no/")
         self.buspanel = self.InfoTextPanel(
-            self, f'Live transit data © Digitransit • ', "Digitransit", "https://digitransit.fi/en/developers/apis/7-terms-of-use/")
+            self, f'Live transit data © Digitransit • ', "Digitransit", "https://digitransit.fi/")
         self.icon_info = self.InfoTextPanel(
             self, "UV, Rain change, and Wind speed, Menu and placeholder image Icons by ", "Icons8", "https://icons8.com")
 

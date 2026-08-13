@@ -22,8 +22,8 @@ class NotebookBusPanel(wx.Panel):
         self.child_panel.SetSizer(self.child_sizer)
         self.main_sizer.Add(self.child_panel, 0, wx.EXPAND |
                             wx.CENTER | wx.ALL, 10)
-        pub.subscribe(self.clear_sizer, "clear notebook_bus_panel")
-        pub.subscribe(self.create_stop_widgets, 'stop available')
+        pub.subscribe(self.clear_sizer, "clear_notebook_bus_panel")
+        pub.subscribe(self.create_stop_widgets, 'stop_available')
 
     # Creates a stop widget
     def create_stop_widgets(self, data):
@@ -37,4 +37,4 @@ class NotebookBusPanel(wx.Panel):
         self.child_sizer.Clear(True)
         self.child_sizer.Layout()
         self.main_sizer.Layout()
-        pub.sendMessage("notebook_bus_panel empty")
+        pub.sendMessage("notebook_bus_panel_empty")

@@ -20,7 +20,7 @@ class HourlyForecastPanel(wx.Panel):
 
         self.scroll_panel.SetSizer(self.child_sizer)
         self.add_widgets()
-        pub.subscribe(self.scroll_panel.Layout, "HourlyForecastPanel updated")
+        pub.subscribe(self.scroll_panel.Layout, "hourlyforecastpanel_updated")
 
     def today_weather_forecast(self) -> list:
         hours_list = ["now", "1_hours_from_now", "2_hours_from_now",

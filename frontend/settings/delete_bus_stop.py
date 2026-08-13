@@ -40,7 +40,7 @@ class DeleteBusStopWidget(wx.Panel):
         if self.choice:
             pub.sendMessage("notification_text_received",
                             label=f'Removing bus stop:\nStop {self.choice} removed.')
-            pub.sendMessage("delete stop", stop_code=self.choice)
+            pub.sendMessage("delete_stop", stop_code=self.choice)
 
     def button_disabled_status(self, key_exists):
         if key_exists:

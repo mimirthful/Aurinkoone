@@ -7,20 +7,23 @@ from model import Model
 class Controller:
     def __init__(self):
         self.model = Model()
-        pub.subscribe(self.model.start_threads, "ui ready")
+        pub.subscribe(self.model.start_threads, "ui_ready")
         pub.subscribe(self.update_frames, "threads_started")
-        pub.subscribe(self.update_frames, "weather updated")
-        pub.subscribe(self.OnClose, "Closing")
-        pub.subscribe(self.clear_content, "stops updated")
-        pub.subscribe(self.create_bus_stops, "notebook_bus_panel empty")
-        pub.subscribe(self.create_new_bus_stop, "new stop")
-        pub.subscribe(self.delete_bus_stop, "delete stop")
+
+        pub.subscribe(self.update_frames, "weather_updated")
+        pub.subscribe(self.clear_content, "stops_updated")
+        pub.subscribe(self.create_bus_stops, "notebook_bus_panel_empty")
+        pub.subscribe(self.OnClose, "closing")
+        # Bus stop  and weather settings subcriptions
+        pub.subscribe(self.create_new_bus_stop, "new_stop")
+        pub.subscribe(self.delete_bus_stop, "delete_stop")
         pub.subscribe(self.update_weather_setting, "weather_area_changed")
+        pub.subscribe(self.get_latest_response_date, "stops_updated")
+        # API key settings subcriptions
         pub.subscribe(self.check_api_key_status, "api_key_status_check")
         pub.subscribe(self.set_api_key, "api_key_added")
-        pub.subscribe(self.get_latest_response_date, "stops updated")
-        pub.subscribe(self.clear_content, "stops updated")
         pub.subscribe(self.remove_api_key, "api_key_removed")
+
         self.main_frame = FrontFrame("Aurinkoone")
         self.main_frame.Show()
 
@@ -40,6 +43,8 @@ class Controller:
         print("Exit")
 
 # -------------------------- BUS STOPS -------------------------
+    # --- API KEY ---
+
     def remove_api_key(self):
         stop_list = self.model.return_stop_list_codes()
         for stop in stop_list:
@@ -81,12 +86,14 @@ class Controller:
         wx.CallAfter(pub.sendMessage, "api_key_info_changed",
                      key_exists=is_key)
 
+    # --- STOPS ---
+
     def return_stop_list_codes(self):
         list = self.model.return_stop_list_codes()
         wx.CallAfter(pub.sendMessage, "stop_list_codes", codes=list)
 
     def clear_content(self):
-        wx.CallAfter(pub.sendMessage, "clear notebook_bus_panel")
+        wx.CallAfter(pub.sendMessage, "clear_notebook_bus_panel")
 
     def delete_bus_stop(self, stop_code):
         self.model.delete_bus_stop(stop_code)
@@ -101,7 +108,7 @@ class Controller:
     def create_bus_stops(self):
         stops = self.model.get_all_stops_readable()
         for stop in stops:
-            wx.CallAfter(pub.sendMessage, "stop available", data=stop)
+            wx.CallAfter(pub.sendMessage, "stop_available", data=stop)
 
 # -------------------------- WEATHER ---------------------------
     def update_weather_setting(self, district):
@@ -137,7 +144,7 @@ class Controller:
             data["rain_change"] = rain_label
             wx.CallAfter(pub.sendMessage, name, data=data)
 
-        wx.CallAfter(pub.sendMessage, "HourlyForecastPanel updated")
+        wx.CallAfter(pub.sendMessage, "hourlyforecastpanel_updated")
 
     def update_daily_forecast(self):
         parent_topic = pub.getDefaultTopicMgr().getTopic("daily_forecast")

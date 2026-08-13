@@ -2,9 +2,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
 
-### Project based ###
-demo/
-Aurinkoone.spec
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -38,7 +35,6 @@ MANIFEST
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
-*.spec
 
 # Installer logs
 pip-log.txt

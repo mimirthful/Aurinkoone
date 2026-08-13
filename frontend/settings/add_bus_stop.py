@@ -30,7 +30,7 @@ class AddBusStopWidget(wx.Panel):
 
     def on_click(self, evt):
         data = self.input.GetValue()
-        pub.sendMessage("new stop", stop_code=data)
+        pub.sendMessage("new_stop", stop_code=data)
 
     def button_disabled_status(self, key_exists):
         if key_exists:

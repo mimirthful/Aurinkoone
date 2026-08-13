@@ -36,21 +36,21 @@ class Model:
         if len(bus_stops) > 0:
             for stop in bus_stops:
                 self.bus_api.get_stop_file(stop.json_file_name)
-        pub.sendMessage("stops updated")
+        pub.sendMessage("stops_updated")
 
     def force_update_weather(self):
         self.weather_api.force_update()
         self.weather_api.fetch_weather()
         pub.sendMessage("New Weather data available")
-        pub.sendMessage("weather updated")
+        pub.sendMessage("weather_updated")
 
 # -------------------------- THREADS ---------------------------
 
     def update_weather(self):
         while self.is_updating:
             self.weather_api.fetch_weather()
-            pub.sendMessage("weather updated")
-            time.sleep(120)
+            pub.sendMessage("weather_updated")
+            time.sleep(60)
 
     def update_stops(self):
         while self.is_updating:
@@ -59,8 +59,8 @@ class Model:
             if len(bus_stops) > 0:
                 for stop in bus_stops:
                     self.bus_api.get_stop_file(stop.json_file_name)
-            pub.sendMessage("stops updated")
-            time.sleep(180)
+            pub.sendMessage("stops_updated")
+            time.sleep(60)
 
 # -------------------------- BUS STOPS -------------------------
     def remove_api_key(self):
@@ -86,7 +86,7 @@ class Model:
 
     def add_bus_stop(self, stop_code):
         '''
-            Fetch a bus stop with given stop_code, and add stop to the lists. \n
+            Fetch a bus stop with given stop_code, and add stop to the lists.
         '''
 
         if not stop_code.isdigit():
@@ -101,7 +101,7 @@ class Model:
             added = self.bus_api.get_stop_file(filename)
             if added:
                 self.bus_service.add_stop(filename)
-                pub.sendMessage("stops updated")
+                pub.sendMessage("stops_updated")
                 return f'Stop [{stop_code}] added.'
             return f"Stop [{stop_code}] not found on backend.\nEither there's no internet \nconnection or stop doesn't exist."
         except Exception as e:
@@ -112,7 +112,7 @@ class Model:
         if stop_object:
             self.bus_api.delete_expiration_from_stop(stop_code)
             self.bus_service.delete_stop(stop_object)
-            pub.sendMessage("stops updated")
+            pub.sendMessage("stops_updated")
 
     def find_stop_by_code(self, stop_code):
         stop_object = None
