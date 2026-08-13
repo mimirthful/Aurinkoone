@@ -30,18 +30,10 @@ class Model:
 
         pub.sendMessage("threads_started")
 
-    def force_update_bus(self):
-        self.bus_service.refresh_stop_list()
-        bus_stops = self.bus_service.stop_list
-        if len(bus_stops) > 0:
-            for stop in bus_stops:
-                self.bus_api.get_stop_file(stop.json_file_name)
-        pub.sendMessage("stops_updated")
-
     def force_update_weather(self):
         self.weather_api.force_update()
         self.weather_api.fetch_weather()
-        pub.sendMessage("New Weather data available")
+        pub.sendMessage("new_weather_data_available")
         pub.sendMessage("weather_updated")
 
 # -------------------------- THREADS ---------------------------
@@ -63,6 +55,8 @@ class Model:
             time.sleep(60)
 
 # -------------------------- BUS STOPS -------------------------
+    # --- API key ---
+
     def remove_api_key(self):
         self.bus_api.remove_api_key()
 
@@ -81,6 +75,7 @@ class Model:
             return True
         return False
 
+    # --- Bus stops ---
     def return_stop_list_codes(self) -> list[str]:
         return self.bus_service.return_stop_list_codes()
 

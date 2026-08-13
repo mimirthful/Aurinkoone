@@ -106,7 +106,7 @@ class WeatherAPI:
                     with open(filepath, "w") as file:
                         file.write(json_str)
                     print("WeatherAPI: Update Succesful")
-                    pub.sendMessage("New Weather data available")
+                    pub.sendMessage("new_weather_data_available")
                 except FileNotFoundError:
                     print("WeatherAPI: weather-JSON Folder not found. Creating it.")
                     os.mkdir(weather_folder)

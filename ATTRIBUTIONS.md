@@ -10,31 +10,30 @@
 
 ## Libraries Summary
 
-| Library | License | Attribution Link |
-|---------|---------|------------------|
-| wxPython | wxWindows Library License (LGPL v2 + exception) | https://wxpython.org/ |
-| PyPubSub | BSD-2-Clause | https://github.com/schollii/pypubsub |
-| requests | Apache-2.0 | https://github.com/psf/requests |
-| pytz | MIT | https://github.com/stub42/pytz |
-| python-dotenv | BSD-3-Clause | https://github.com/theskumar/python-dotenv |
-| PyInstaller | GPL-2.0-or-later (with bundling exception) | https://www.pyinstaller.org/ |
+| Library     | License                                         | Attribution Link                     |
+| ----------- | ----------------------------------------------- | ------------------------------------ |
+| wxPython    | wxWindows Library License (LGPL v2 + exception) | https://wxpython.org/                |
+| PyPubSub    | BSD-2-Clause                                    | https://github.com/schollii/pypubsub |
+| requests    | Apache-2.0                                      | https://github.com/psf/requests      |
+| pytz        | MIT                                             | https://github.com/stub42/pytz       |
+| PyInstaller | GPL-2.0-or-later (with bundling exception)      | https://www.pyinstaller.org/         |
 
 ---
 
 ## Data Sources
 
-| Source | License | Attribution Required |
-|--------|---------|---------------------|
-| Weather: MET Norway / NRK (Yr.no) | CC BY 4.0 | "Weather data from MET Norway" + https://www.yr.no/ |
-| Transit: Digitransit | CC BY-SA 3.0 | "Live transit data provided by Digitransit" + https://digitransit.fi/ + timestamp |
+| Source                            | License      | Attribution Required                                                              |
+| --------------------------------- | ------------ | --------------------------------------------------------------------------------- |
+| Weather: MET Norway / NRK (Yr.no) | CC BY 4.0    | "Weather data from MET Norway" + https://www.yr.no/                               |
+| Transit: Digitransit              | CC BY-SA 3.0 | "Live transit data provided by Digitransit" + https://digitransit.fi/ + timestamp |
 
 ---
 
 ## Icons
 
-| Provider | License | Attribution Required |
-|----------|---------|---------------------|
-| Icons8 | Free License | "Icons by Icons8" + https://icons8.com |
+| Provider | License      | Attribution Required                   |
+| -------- | ------------ | -------------------------------------- |
+| Icons8   | Free License | "Icons by Icons8" + https://icons8.com |
 
 ---
 
@@ -61,7 +60,6 @@ EXCEPTION NOTICE:
     The exception is that you may use, copy, link, modify and distribute under your own terms, binary object code versions of works based on the Library.
 
     If you copy code from files distributed under the terms of the GNU General Public Licence or the GNU Library General Public Licence into a copy of this Library, as part of an executable or other work, you must include the full text of the applicable licence.
-
 
 Full license: https://wxpython.org/pages/license/index.html
 
@@ -247,28 +245,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Full: https://github.com/stub42/pytz
 
----
-
-### python-dotenv — BSD-3-Clause
-
-BSD-3-Clause License
-
-Copyright (c) The dotenv authors
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-    Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Full: https://github.com/theskumar/python-dotenv
-
----
-
 ## Aurinkoone — MIT License
 
 MIT License
@@ -285,26 +261,25 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Quick Links
 
-| License | URL |
-|---------|-----|
-| MIT License | https://opensource.org/license/mit/ |
-| wxWindows Library License | https://wxpython.org/pages/license/index.html |
-| BSD-2-Clause | https://opensource.org/license/bsd-2-clause/ |
-| BSD-3-Clause | https://opensource.org/license/bsd-3-clause/ |
-| Apache-2.0 | https://www.apache.org/licenses/LICENSE-2.0 |
-| GPL-2.0 | https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html |
-| CC BY 4.0 | https://creativecommons.org/licenses/by/4.0/ |
-| CC BY-SA 3.0 | https://creativecommons.org/licenses/by-sa/3.0/ |
+| License                   | URL                                                       |
+| ------------------------- | --------------------------------------------------------- |
+| MIT License               | https://opensource.org/license/mit/                       |
+| wxWindows Library License | https://wxpython.org/pages/license/index.html             |
+| BSD-2-Clause              | https://opensource.org/license/bsd-2-clause/              |
+| Apache-2.0                | https://www.apache.org/licenses/LICENSE-2.0               |
+| GPL-2.0                   | https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html |
+| CC BY 4.0                 | https://creativecommons.org/licenses/by/4.0/              |
+| CC BY-SA 3.0              | https://creativecommons.org/licenses/by-sa/3.0/           |
 
 ---
 
 ## UI Attribution Requirements (Displays in App)
 
-| Component | Required Display |
-|-----------|-----------------|
-| Weather Data | "Weather data from MET Norway" + https://www.yr.no/ |
+| Component    | Required Display                                                                  |
+| ------------ | --------------------------------------------------------------------------------- |
+| Weather Data | "Weather data from MET Norway" + https://www.yr.no/                               |
 | Transit Data | "Live transit data provided by Digitransit" + https://digitransit.fi/ + timestamp |
-| Icons | "Icons by Icons8" + https://icons8.com |
+| Icons        | "Icons by Icons8" + https://icons8.com                                            |
 
 ---
 
@@ -313,4 +288,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 **Project:** Aurinkoone - Tampere weather and bus stops
 
 ---
-

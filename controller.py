@@ -67,6 +67,7 @@ class Controller:
         message = "API key is either not valid\nor there is no internet connection."
         previous_key = self.model.get_api_key()
 
+        # This should not be possible in UI now, but left here just in case
         if stripped == previous_key:
             message = "Given key is already set. No need to reset."
             valid = False

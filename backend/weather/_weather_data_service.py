@@ -45,7 +45,7 @@ class WeatherDataService:
             "6_nights_from_today": None,
         }
         self._populate_lists()
-        pub.subscribe(self.update, "New Weather data available")
+        pub.subscribe(self.update, "new_weather_data_available")
 
     def update(self):
         self._obj_maker = wof()

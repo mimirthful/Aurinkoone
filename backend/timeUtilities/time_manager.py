@@ -1,17 +1,12 @@
 import datetime as dt
 import pytz
-import os
-from dotenv import load_dotenv
 from .datetime_relation import DateTimeRelation
-
-load_dotenv()
 
 
 class TimeManager:
     def __init__(self):
         self._tz_zulu = pytz.timezone('Etc/Zulu')
-        self._tz_home = pytz.timezone(
-            os.getenv("HOME_TIMEZONE") or 'Europe/Helsinki')
+        self._tz_home = pytz.timezone('Europe/Helsinki')
 
     def _get_time_now(self, timezone=None):
         time_now = dt.datetime.now()
