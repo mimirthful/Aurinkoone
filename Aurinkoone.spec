@@ -22,7 +22,7 @@ exe = EXE(
     [],
     exclude_binaries=True,
     name='Aurinkoone',
-    icon='./favicon-32x32.png',
+    icon='./favicon-32x32.ico',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
