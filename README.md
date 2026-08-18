@@ -1,5 +1,5 @@
 # ☀️ Aurinkoone
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-orange)](https://github.com/mimirthful/Aurinkoone/releases)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)](README.md)
