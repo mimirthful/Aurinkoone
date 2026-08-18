@@ -46,11 +46,11 @@ class Model:
 
     def update_stops(self):
         while self.is_updating:
-            self.bus_service.refresh_stop_list()
             bus_stops = self.bus_service.stop_list
             if len(bus_stops) > 0:
                 for stop in bus_stops:
                     self.bus_api.get_stop_file(stop.json_file_name)
+            self.bus_service.refresh_stop_list()
             pub.sendMessage("stops_updated")
             time.sleep(60)
 

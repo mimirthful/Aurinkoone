@@ -34,6 +34,7 @@ class BusStopService:
         try:
             self.stop_list.remove(stop)
             os.remove(path)
+            self.factory.update()
             return stop
         except Exception as e:
             print(e)

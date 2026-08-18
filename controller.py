@@ -11,7 +11,7 @@ class Controller:
         pub.subscribe(self.update_frames, "threads_started")
 
         pub.subscribe(self.update_frames, "weather_updated")
-        pub.subscribe(self.clear_content, "stops_updated")
+        pub.subscribe(self.clear_bus_panel_content, "stops_updated")
         pub.subscribe(self.create_bus_stops, "notebook_bus_panel_empty")
         pub.subscribe(self.OnClose, "closing")
         # Bus stop  and weather settings subcriptions
@@ -26,6 +26,7 @@ class Controller:
 
         self.main_frame = FrontFrame("Aurinkoone")
         self.main_frame.Show()
+        self.model.force_update_weather()
 
     def update_frames(self):
         self.get_district_name()
@@ -93,7 +94,7 @@ class Controller:
         list = self.model.return_stop_list_codes()
         wx.CallAfter(pub.sendMessage, "stop_list_codes", codes=list)
 
-    def clear_content(self):
+    def clear_bus_panel_content(self):
         wx.CallAfter(pub.sendMessage, "clear_notebook_bus_panel")
 
     def delete_bus_stop(self, stop_code):
